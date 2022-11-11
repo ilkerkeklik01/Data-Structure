@@ -26,33 +26,28 @@ int main(){
 	nodePtr root = NULL;
 	nodePtr end = NULL;
 	
-	enqueue(&root,1,&end);
-	enqueue(&root,2,&end);
-	enqueue(&root,3,&end);
-	enqueue(&root,4,&end);
-	enqueue(&root,5,&end);
-	enqueue(&root,6,&end);
-	enqueue(&root,7,&end);
-	enqueue(&root,8,&end);
-	enqueue(&root,9,&end);
-	
-	dequeue(&root);
-	dequeue(&root);
-	dequeue(&root);
-	dequeue(&root);
 	
 	
-	enqueue(&root,6,&end);
-	enqueue(&root,7,&end);
-	enqueue(&root,8,&end);
-	enqueue(&root,9,&end);
-	
-	dequeue(&root);
-	dequeue(&root);
-	dequeue(&root);
-	dequeue(&root);
+	for(int i=1;i<=100;i++){
+		enqueue(&root,i,&end);
+	}
 	
 	bastir(root);
+	printf("\n");
+	for(int i=1;i<=50;i++){
+		dequeue(&root);
+	}
+	
+	bastir(root);
+	printf("\n");
+	for(int i=1;i<=50;i++){
+		enqueue(&root,i*10,&end);
+	}
+	
+	bastir(root);
+	
+	
+	
 	
 	
 	return 0;
@@ -65,7 +60,7 @@ void enqueue(nodePtr* root,int x,nodePtr* end){
 			(*root)->data=x;
 			(*root)->next=NULL;
 			*end = *root; 	 
-			
+			 
 			return ;
 		}
 		
