@@ -87,8 +87,6 @@ int dequeue(nodePtr* root){
 }
 void bastir(node* r){
 	
-	
-	
 	while(r!=NULL){
 		
 		printf("%d ",r->data);
