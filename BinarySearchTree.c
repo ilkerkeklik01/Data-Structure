@@ -27,30 +27,26 @@ int search(nodePtr root, int data){
     else  return search(root->right,data);
 }
 
-int max=-999999999;
-int findMax(nodePtr root){
 
-    if(root==NULL) return max;
-    else{
-        max=root->data;
-        findMax(root->right);
-    }
-    return max;
+nodePtr findMax(nodePtr root){
+	
+	if(root==NULL) return NULL;
+	if(root->right==NULL) return root;
+	return findMax(root->right);
+    
 
 }
 
-int min=999999999;
-int findMin(nodePtr root){
-
-    if(root==NULL) return min;
-    else {
-        min=root->data;
-        findMin(root->left);
-    }
-    return min;
-
+nodePtr findMin(nodePtr root){
+	
+	if(root==NULL) return NULL;
+	if(root->left==NULL) return root;
+	return findMin(root->left);
+    
 }
 
+
+nodePtr delete(nodePtr root,int data);
 
 int main(){
 
@@ -81,8 +77,11 @@ int main(){
     if(c==0) printf("not found");
     else if(c==1) printf("found");
 
-    printf("\n max= %d", findMax(root));
-    printf("\n min= %d", findMin(root));
+	root = delete(root,-3)	;
+	root = delete(root,5)	;
+	root = delete(root,2132)	;
+    printf("\n max= %d", findMax(root)->data);
+    printf("\n min= %d", findMin(root)->data);
 
 
 
@@ -105,3 +104,47 @@ void insert(nodePtr* rootPtr , int data){
 
 }
 
+nodePtr delete(nodePtr root,int data){
+	
+	if(root==NULL) return root;
+	else if(data < root->data) root->left = delete(root->left,data);
+	else if (data > root->data) root->right = delete(root->right,data);
+	
+	else{ // I found to be deleted element
+		
+		//case 1 : no child
+		
+		if(root->left==NULL && root->right==NULL) {
+			free(root);
+			root = NULL;
+			
+		}
+		
+		//case 2 : One child
+		
+		else if(root->left==NULL){
+			nodePtr temp = root;
+			root = root->right;
+			free(temp);
+			temp=NULL;
+			
+		}
+		else if(root->right==NULL){
+			nodePtr temp = root;
+			root = root->left;
+			free(temp);
+			temp=NULL;
+			
+		}
+		
+		//case 3: two children
+		else{
+			nodePtr temp = findMin(root->right); 
+			root->data=temp->data;
+			root->right = delete(root->right,temp->data);
+		}
+		
+		
+	}
+	return root;
+}
